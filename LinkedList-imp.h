@@ -11,60 +11,79 @@
 # include <cmath>
 using namespace std;
 
-template<typename T>
+//unsorted linked list implementation of a MPQ
+template<typename T, typename U>
 struct Item {
-    int key;
-    T element;
-    Item<T>* prev;
-    Item<T>* next; 
+    T key;
+    U element;
+    Item<T, U>* prev;
+    Item<T, U>* next; 
     // constructor
-    Item(int j = -10, T e = T(), Item<T>* n=nullptr, Item<T>* m=nullptr):key(j),element(e), prev(n), next(n){}
-    void setKey(int k){key = k;}
-    void setElement(T e){element = e;}
+    Item(T e = T(), U j = U(), Item<T, U>* n=nullptr, Item<T, U>* m=nullptr):key(e),element(j), prev(n), next(m){}
+    void setKey(T k){key = k;}
+    void setElement(U e){element = e;}
 };
 
 // one header and the end of the list is designated by nullptr
-template<typename T>
+template<typename T, typename U>
 class LinkedList {
     private:
-        Item<T> head, tail;
+        Item<T, U> head, tail;
     public:
         LinkedList():head(T()), tail(T()) { head.next = &tail; tail.prev = &head;}
-        void insert(int k, T val);
-        int remove_min();
+        void insert(T k, U val);
+        T remove_min();
         bool is_empty(){ return head.next == &tail;}
-        Item<T>* first_node() const {return head.next;}
-        const Item<T> *after_last_node() const { return &tail; }
+        Item<T, U>* first_node() const {return head.next;}
+        const Item<T, U> *after_last_node() const { return &tail; }
+};
+struct EmptyDLList : public std::runtime_error {
+  explicit EmptyDLList(char const* msg=nullptr): runtime_error(msg) {}
 };
 
-template <typename T>
-void LinkedList<T>::insert(int k, T val) // insert in mpq order
+template<typename T, typename U>
+void LinkedList<T, U>::insert(T k, U val) // insert to end of the list
 {
-    //smallest key at the beginning
-    if(is_empty()){
-        Item<T>* first = new Item<T>(k, val, &head, &tail);
-        head.next = first;
-        tail.prev = first;
+    Item<T, U>* add = new Item<T,U>(k , val, tail.prev, &tail);
+    tail.prev->next = add;
+    tail.prev = add;
+}
+
+template<typename T, typename U>
+T LinkedList<T, U>::remove_min()
+{
+    if (is_empty()) {
+        throw EmptyDLList("List is empty!");
     }
 
-}
+    Item<T, U>* node = first_node();
+    T min = node->key;
+    while(node->next != after_last_node()){
+        if(node->key < min){
+            min = node->key;
+        }
+        node = node->next;
+    }
 
-template <typename T>
-int LinkedList<T>::remove_min()
-{
+    //now we have the min value
+    node = first_node();
+    Item<T, U>* node2 = first_node();
+    while(node->next != after_last_node()){
+        if(node->key == min){
+            node2 = node->prev->next;
+           	node->next->prev = node->prev;
+	        node->prev->next = node->next;
+            delete node;
+            node = node2;
+        } else {
+            node2 = node;
+            node = node->next;
+        }
 
-}
-template <typename T>
-ostream& operator<<(ostream& out, const LinkedList<T>& dll) //O(n)
-{  
-  Item<T>* traverse = dll.first_node();
-  int nodeNum = 0;
-  while (traverse != dll.after_last_node()){
-    out << "Node: " << nodeNum << " -- " << traverse->key << endl;
-    traverse = traverse->next;
-    nodeNum++;
-  }
-  return out;
+    }
+    return min;
+
+
 }
 
 #endif

@@ -19,6 +19,30 @@ int main()
 {   
     MinPriorityQueue<int, int> my_queue;
 
+    LinkedList<int, int> my_list;
+    if (my_list.is_empty()){
+        cout << "Adding new items into list" << endl;
+        my_list.insert(2, 4);
+        my_list.insert(-1, 4);
+        my_list.insert(8, 3);
+        my_list.insert(-5, 4);
+        my_list.insert(3, 4);
+        cout << my_list.remove_min() << endl;
+    } else {
+        cout << "List not empty"<< endl;
+    }
+
+    if (my_list.is_empty()){
+        cout << "Adding new items into list" << endl;
+        my_list.insert(2, 4);
+        my_list.insert(-1, 4);
+        my_list.insert(5, 4);
+        my_list.insert(3, 4);
+    } else {
+        cout << "List not empty"<< endl;
+    }
+
+
     if (my_queue.is_empty()){
         cout << "Adding new pairs into vector" << endl;
         my_queue.insert(2, 4);
