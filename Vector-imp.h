@@ -9,6 +9,8 @@
 # include <stdexcept>
 # include <algorithm>  
 # include <vector>
+# include<bits/stdc++.h>
+
 using namespace std;
 
 
@@ -54,9 +56,9 @@ vector<Pair<T, U>> merge(vector<Pair<T, U>> left, vector<Pair<T, U>> right)
          }
       }else if((int)left.size() > 0) {
             for (int i = 0; i < (int)left.size(); i++)
-               result.push_back(left[i]);
+                result.push_back(left[i]);
             break;
-      }  else if ((int)right.size() > 0) {
+      }else if((int)right.size() > 0) {
             for (int i = 0; i < (int)right.size(); i++)
                result.push_back(right[i]);
             break;
@@ -72,21 +74,21 @@ vector<Pair<T, U>> mergeSort(vector<Pair<T, U>> m)
       return m;
     }
     vector<Pair<T, U>> left, right, result;
-   int middle = ((int)m.size()+ 1) / 2;
+    int middle = ((int)m.size()+ 1) / 2;
  
-   for (int i = 0; i < middle; i++) {
-      left.push_back(m[i]);
-   }
+    for (int i = 0; i < middle; i++) {
+        left.push_back(m[i]);
+    }
 
-   for (int i = middle; i < (int)m.size(); i++) {
-      right.push_back(m[i]);
-   }
+    for (int i = middle; i < (int)m.size(); i++) {
+        right.push_back(m[i]);
+    }
  
-   left = mergeSort(left);
-   right = mergeSort(right);
-   result = merge(left, right);
+    left = mergeSort(left);
+    right = mergeSort(right);
+    result = merge(left, right);
  
-   return result;
+    return result;
 }
 
 template<typename T, typename U>
@@ -100,9 +102,14 @@ void MinPriorityQueue<T, U>::insert(T k, U val)
 template<typename T, typename U>
 T MinPriorityQueue<T, U>::remove_min()
 {
-    Pair<T, U> min = mpq.at(0);
-    mpq.pop_front();
-    return min.key;
+    T min = mpq.at(0).key;
+    int index = 0;
+    while (mpq.at(index).key == min && mpq.size() != 0){
+        mpq.erase(mpq.begin());
+        index++;
+    }
+
+    return min;
 }
 
 
