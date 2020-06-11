@@ -7,61 +7,102 @@
 
 # include <iostream>
 # include <stdexcept>
-# include <fstream>
+# include <algorithm>  
 # include <vector>
 using namespace std;
 
 
-template<typename T>
-struct ItemV
+template<typename T, typename U>
+struct Pair
 {   
-    int key;
-    T element;
+    T key;
+    U element;
 
-    ItemV(int j = 0, T e = T()):key(j), element(e){} 
-    void setKey(int k){key = k;}
-    void setElement(T e){element = e;}
+    Pair(T j = T(), U e = U()):key(j), element(e){} 
+    void setKey(T k){key = k;}
+    void setElement(U e){element = e;}
     int get_key(){return key;}
-    T get_element(){return element;
+    T get_element(){return element;}
 };
 
-template<typename T>
+template<typename T, typename U>
 class MinPriorityQueue
 {   
-    private:
-        int mpq_size;
-        vector<ItemV<T>> mpq;
     public:
+        vector<Pair<T, U>> mpq;
 
-        MinPriorityQueue(int sz = 0): mpq_size(sz), mpq(sz, 0){}
-        int remove_min();
+        MinPriorityQueue(int sz = 0): mpq(sz){}
+        T remove_min();
         bool is_empty(){ return mpq.size() == 0;}
-        void insert_item(int k, T val);
+        void insert(T k, U val);
         int get_size(){return mpq.size();}
-        int get_key(int index){return  mpq.at(index).get_key();}
-        T get_element(int index){return mpq.at(index).get_element();}
-
 
 };
 
-template<typename T>
-void MinPriorityQueue<T>::insert_item(int k, T val)
+template<typename T, typename U>
+vector<Pair<T, U>> merge(vector<Pair<T, U>> left, vector<Pair<T, U>> right) 
 {
-    ItemV<T> add(k, val);
-    typename vector<ItemV<T>>::iterator it;
-    it = mpq.begin();
+    vector<Pair<T, U>> result;
+    while (left.size() > 0 || right.size() > 0) {
+      if (left.size() > 0 && right.size() > 0) {
+         if (left.front().key <= right.front().key) {
+            result.push_back((left.front()));
+            left.erase(left.begin());
+         } else {
+            result.push_back(right.front());
+            right.erase(right.begin());
+         }
+      }else if((int)left.size() > 0) {
+            for (int i = 0; i < (int)left.size(); i++)
+               result.push_back(left[i]);
+            break;
+      }  else if ((int)right.size() > 0) {
+            for (int i = 0; i < (int)right.size(); i++)
+               result.push_back(right[i]);
+            break;
+      }
+   }
+   return result; 
+}
 
-    if(is_empty()){
-        mpq.push_back(add); 
-    }else if(k > (mpq.at(mpq.size()-1)).key){
-        mpq.push_back(add); // if at end
-    } else {
-        for(it = mpq.begin(); it < mpq.end() - 1; it++){
-            if(get_key(it) < k && get_key(it+1) > k){
-                mpq.insert(it, add);
-            }
-        }
+template<typename T, typename U>
+vector<Pair<T, U>> mergeSort(vector<Pair<T, U>> m) 
+{
+   if (m.size() <= 1){
+      return m;
     }
+    vector<Pair<T, U>> left, right, result;
+   int middle = ((int)m.size()+ 1) / 2;
+ 
+   for (int i = 0; i < middle; i++) {
+      left.push_back(m[i]);
+   }
+
+   for (int i = middle; i < (int)m.size(); i++) {
+      right.push_back(m[i]);
+   }
+ 
+   left = mergeSort(left);
+   right = mergeSort(right);
+   result = merge(left, right);
+ 
+   return result;
+}
+
+template<typename T, typename U>
+void MinPriorityQueue<T, U>::insert(T k, U val)
+{
+    Pair<T, U>* add = new Pair<T, U>(k, val);
+    mpq.push_back((*add));
+    mpq = mergeSort(this->mpq);
+}
+
+template<typename T, typename U>
+T MinPriorityQueue<T, U>::remove_min()
+{
+    Pair<T, U> min = mpq.at(0);
+    mpq.pop_front();
+    return min.key;
 }
 
 
