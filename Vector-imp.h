@@ -37,7 +37,6 @@ class MinPriorityQueue
         T remove_min();
         bool is_empty(){ return mpq.size() == 0;}
         void insert(T k, U val);
-        int get_size(){return mpq.size();}
 
 };
 
