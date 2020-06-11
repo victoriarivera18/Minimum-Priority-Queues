@@ -1,7 +1,7 @@
 // V. Rivera Casanova
 // CSCE 221
 // Leyk 199
-
+// w/ git version comntrol
 # include <iostream>
 # include <stdexcept>
 # include <cmath>
@@ -13,7 +13,7 @@ using namespace std;
 // definition of (key, value) pair that makes up the mpq
 
 int main()
-{
+{   
     return 0;
 }
 
