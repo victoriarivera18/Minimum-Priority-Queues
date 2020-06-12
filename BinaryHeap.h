@@ -32,9 +32,25 @@ class BinaryHeap
     
     public:
         BinaryHeap(int sz = 0): heap(sz){}
-        int remove_min();
+        T remove_min();
         bool is_empty(){ return heap.size() == 0;}
-        void insert(int i, int len, int p);
+        void insert(T add);
 };
+
+template<typename T>
+T BinaryHeap<T>::remove_min()
+{
+    // pop the top element
+    // restructure the heap to have new min at the top
+    // everything else also in mpq order
+}
+
+template<typename T>
+void BinaryHeap<T>::insert(T add)
+{
+
+}
+
+
 
 #endif

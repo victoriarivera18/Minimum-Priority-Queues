@@ -5,6 +5,7 @@
 
 # include "LinkedList-imp.h"
 # include "Vector-imp.h"
+# include "BinaryHeap.h"
 
 # include <iostream>
 # include <stdexcept>
@@ -17,7 +18,7 @@ using namespace std;
 
 int main()
 {   
-    MinPriorityQueue<int, int> my_queue;
+    /*MinPriorityQueue<int, int> my_queue;
 
     LinkedList<int, int> my_list;
     if (my_list.is_empty()){
@@ -65,7 +66,10 @@ int main()
         cout << "Size: " <<  my_queue.mpq.size() << endl;
     } else {
         cout << "List not empty"<< endl;
-    }
+    } */
+    BinaryHeap<int> intHeap;
+    BinaryHeap<CPU_Job> myHeap;
+
 
     return 0;
 }
