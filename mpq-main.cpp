@@ -70,6 +70,29 @@ int main()
     BinaryHeap<int> intHeap;
     BinaryHeap<CPU_Job> myHeap;
 
+    intHeap.insert(1);
+    intHeap.insert(4);
+    intHeap.insert(7);
+    intHeap.insert(-2);
+    intHeap.insert(5);
+    cout << endl;
+    cout << endl;
+    intHeap.insert(3);
+    cout << endl;
+    cout << endl;
+    try {
+        cout << intHeap.remove_min() << endl;
+        cout << intHeap.remove_min() << endl;
+        cout << intHeap.remove_min() << endl;
+        cout << intHeap.remove_min() << endl;
+        cout << intHeap.remove_min() << endl;
+        cout << intHeap.remove_min() << endl;
+
+    } catch(EmptyTree){
+        cout << "Tree is empty!" << endl;
+    }
+
+
 
     return 0;
 }
