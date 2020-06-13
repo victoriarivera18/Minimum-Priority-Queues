@@ -75,11 +75,8 @@ int main()
     intHeap.insert(7);
     intHeap.insert(-2);
     intHeap.insert(5);
-    cout << endl;
-    cout << endl;
     intHeap.insert(3);
-    cout << endl;
-    cout << endl;
+
     try {
         cout << intHeap.remove_min() << endl;
         cout << intHeap.remove_min() << endl;

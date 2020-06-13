@@ -28,6 +28,7 @@ struct EmptyTree : public std::runtime_error {
 };
 
 //binary heap implementation using a vector
+
 template<typename T>
 class BinaryHeap
 {
@@ -39,6 +40,37 @@ class BinaryHeap
         bool is_empty(){ return heap.size() == 0;}
         void insert(T add);
 };
+// overload the () or the < operator for 2  CPU_Jobs
+template<typename T>
+bool operator <(const CPU_Job& left,  const CPU_Job& right) {
+    if(left.prior < right.prior) { // higher priority
+        return true;
+    }else if(left.prior == right.prior){ // high priority id ID is less
+        if(left.ID < right.prior){
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+template<typename T>
+bool operator >(const CPU_Job& left,  const CPU_Job& right) {
+    if(left.prior > right.prior) {
+        return true;
+    } else if(left.prior == right.prior){
+        if(left.ID  > right.prior){
+            return true;
+        } else{
+            return false;
+        }
+    } else{
+        return false;
+    }
+}
+
 
 template<typename T>
 T BinaryHeap<T>::remove_min()
@@ -47,7 +79,7 @@ T BinaryHeap<T>::remove_min()
     // restructure the heap to have new min at the top
     // everything else also in mpq order
     if (heap.size() == 0){
-        throw EmptyTree("Tree is empty!");
+        throw EmptyTree("Queue is empty!");
     }
     int min = heap.at(0);
     int size = heap.size();
@@ -86,9 +118,9 @@ void BinaryHeap<T>::insert(T add) // like buildHeap()
         }
         index = (index - 1)/ 2;
     }
-    for(size_t i = 0; i < heap.size(); i++){
+    /* for(size_t i = 0; i < heap.size(); i++){
         cout << heap.at(i) << " ";
-    }
+    }*/
 }
 
 
