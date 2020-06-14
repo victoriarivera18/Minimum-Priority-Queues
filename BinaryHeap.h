@@ -18,9 +18,10 @@ struct CPU_Job
     int ID;
     int length;
     int prior;
-    CPU_Job(int a=0, int b=0, int c=0):ID(a), length(b), prior(c){};
-
-    bool operator<(const CPU_Job& job); // compares jobs priorities and/or IDs
+    CPU_Job(int a=0, int b=0, int c=0):ID(a), length(b), prior(c){}
+    bool operator<(const CPU_Job& right);
+    bool operator>(const CPU_Job& right);
+    //bool operator<(const CPU_Job& job); // compares jobs priorities and/or IDs
 };
 
 struct EmptyTree : public std::runtime_error {
@@ -41,12 +42,11 @@ class BinaryHeap
         void insert(T add);
 };
 // overload the () or the < operator for 2  CPU_Jobs
-template<typename T>
-bool operator <(const CPU_Job& left,  const CPU_Job& right) {
-    if(left.prior < right.prior) { // higher priority
+bool CPU_Job::operator<(const CPU_Job& right) {
+    if(this->prior < right.prior) { // higher priority
         return true;
-    }else if(left.prior == right.prior){ // high priority id ID is less
-        if(left.ID < right.prior){
+    }else if(this->prior== right.prior){ // high priority id ID is less
+        if(this->prior < right.prior){
             return true;
         } else {
             return false;
@@ -56,12 +56,11 @@ bool operator <(const CPU_Job& left,  const CPU_Job& right) {
     }
 }
 
-template<typename T>
-bool operator >(const CPU_Job& left,  const CPU_Job& right) {
-    if(left.prior > right.prior) {
+bool CPU_Job::operator>(const CPU_Job& right) {
+    if(this->prior > right.prior) {
         return true;
-    } else if(left.prior == right.prior){
-        if(left.ID  > right.prior){
+    } else if(this->prior == right.prior){
+        if(this->prior > right.prior){
             return true;
         } else{
             return false;
@@ -69,6 +68,13 @@ bool operator >(const CPU_Job& left,  const CPU_Job& right) {
     } else{
         return false;
     }
+}
+ostream& operator << (ostream& os, const CPU_Job& r1) { // outputs certain records in stated format
+    // O(1)
+    os << "Job ID: " << r1.ID << endl;
+    os << "Length: " << r1.length << endl;
+    os << "Priority: " << r1.prior << endl;
+    return os;
 }
 
 
@@ -80,12 +86,22 @@ T BinaryHeap<T>::remove_min()
     // everything else also in mpq order
     if (heap.size() == 0){
         throw EmptyTree("Queue is empty!");
+    } else if (heap.size() == 1){
+        T min = heap.at(0);
+        heap.pop_back();
+        return min;
     }
-    int min = heap.at(0);
+
+    T min = heap.at(0);
+    //cout << "Min now: "<< heap.at(0); // check to see what new end is
     int size = heap.size();
+    // cout << "End element after before swap: " <<  heap.at(size - 1) << endl; // check to see what new end is
     swap(heap.at(0), heap.at(size - 1)); // swapping first and last elements
+    // cout << "End element after swap now: " <<  heap.at(size - 1)<< endl; // check to see what new end is
     heap.pop_back(); //delete old min
     size = heap.size(); // new size of vector
+    // cout << "Min after swap: "<< heap.at(0)<< endl;
+    //cout << "Last element after pop_back:" << heap.at(size - 1)<< endl; // check to see what new end is
 
     int index = 0;
     int leftChild = 2*index + 1;
@@ -112,15 +128,18 @@ void BinaryHeap<T>::insert(T add) // like buildHeap()
 {
     heap.push_back(add);
     int index = heap.size() - 1;
-    while(index >= 1){
-        if (heap.at(index) < heap.at((index - 1) / 2)){
-            swap(heap.at(index), heap.at((index - 1)/ 2));
+    if(heap.size() > 1){
+        while(index >= 1){
+            if (heap.at(index) < heap.at((index - 1) / 2)){
+                swap(heap.at(index), heap.at((index - 1)/ 2));
+            }
+            index = (index - 1)/ 2;
         }
-        index = (index - 1)/ 2;
     }
     /* for(size_t i = 0; i < heap.size(); i++){
-        cout << heap.at(i) << " ";
+        cout << heap.at(i) << endl;
     }*/
+    cout << endl;
 }
 
 

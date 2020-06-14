@@ -9,7 +9,9 @@
 
 # include <iostream>
 # include <stdexcept>
-# include <cmath>
+# include <sstream>
+# include <fstream>
+# include <string>
 # include <vector>
 using namespace std;
 
@@ -67,7 +69,7 @@ int main()
     } else {
         cout << "List not empty"<< endl;
     } */
-    BinaryHeap<int> intHeap;
+    /* BinaryHeap<int> intHeap;
     BinaryHeap<CPU_Job> myHeap;
 
     intHeap.insert(1);
@@ -84,10 +86,56 @@ int main()
         cout << intHeap.remove_min() << endl;
         cout << intHeap.remove_min() << endl;
         cout << intHeap.remove_min() << endl;
+        // cout << intHeap.remove_min() << endl; invokes runtime_error()
 
     } catch(EmptyTree){
         cout << "Tree is empty!" << endl;
+    } */
+
+    //need to create struct
+    //insert into binary heap of CPU_Jobs
+
+    //reading from file also
+    BinaryHeap<CPU_Job> myHeap;
+    string file4 = "Data file/SetSize4.txt";
+    string file10 = "SetSize10.txt";
+    string file100 = "SetSize100.txt";
+    string file1000 = "SetSize10000.txt";
+    string file10000 = "SetSize10000.txt";
+    string file100000 = "SetSize10000.txt";
+
+    ifstream ifs("SetSize4.txt");
+    //ifstream ifs2(file10);
+    //ifstream ifs3(file100);
+    //ifstream ifs4(file1000);
+    //ifstream ifs5(file10000);
+    //ifstream ifs6(file100000);
+
+    int id, len, prior;
+    string line;
+    stringstream ss;
+    
+    while(!ifs.eof()){
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp(id, len, prior);
+        myHeap.insert(temp); // inserting job into heap
     }
+
+
+
+
+        CPU_Job min = myHeap.remove_min();
+        cout << endl << min.prior << endl;
+        CPU_Job min2 = myHeap.remove_min();
+        cout << endl << min2.prior << endl;
+        CPU_Job min3 = myHeap.remove_min();
+        cout << endl << min3.prior << endl;
+        CPU_Job min4 = myHeap.remove_min();
+        cout << endl << min4.prior << endl;
+
+
 
 
 
