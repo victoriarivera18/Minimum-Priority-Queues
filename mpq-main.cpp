@@ -104,7 +104,7 @@ int main()
     string file10000 = "SetSize10000.txt";
     string file100000 = "SetSize10000.txt";
 
-    ifstream ifs("SetSize4.txt");
+    ifstream ifs("SetSize10.txt");
     //ifstream ifs2(file10);
     //ifstream ifs3(file100);
     //ifstream ifs4(file1000);
@@ -115,7 +115,7 @@ int main()
     string line;
     stringstream ss;
     
-    while(!ifs.eof()){
+    while(!ifs.eof()){ // only going into loop 1 time when doing 10
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
@@ -125,6 +125,7 @@ int main()
 
 
 
+    try {
 
         CPU_Job min = myHeap.remove_min();
         cout << endl << min.prior << endl;
@@ -134,7 +135,13 @@ int main()
         cout << endl << min3.prior << endl;
         CPU_Job min4 = myHeap.remove_min();
         cout << endl << min4.prior << endl;
-
+        CPU_Job min5 = myHeap.remove_min();
+        cout << endl << min5.prior << endl;
+        CPU_Job min6 = myHeap.remove_min();
+        cout << endl << min6.prior << endl;
+    } catch(EmptyTree){
+        cout << "Tree is empty!" << endl;
+    }
 
 
 

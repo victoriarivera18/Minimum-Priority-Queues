@@ -95,29 +95,32 @@ T BinaryHeap<T>::remove_min()
     T min = heap.at(0);
     //cout << "Min now: "<< heap.at(0); // check to see what new end is
     int size = heap.size();
-    // cout << "End element after before swap: " <<  heap.at(size - 1) << endl; // check to see what new end is
+    //cout << "End element after before swap: " <<  heap.at(size - 1) << endl; // check to see what new end is
     swap(heap.at(0), heap.at(size - 1)); // swapping first and last elements
-    // cout << "End element after swap now: " <<  heap.at(size - 1)<< endl; // check to see what new end is
+    //cout << "End element after swap now: " <<  heap.at(size - 1)<< endl; // check to see what new end is
     heap.pop_back(); //delete old min
     size = heap.size(); // new size of vector
-    // cout << "Min after swap: "<< heap.at(0)<< endl;
+    //cout << "Min after swap: "<< heap.at(0)<< endl;
     //cout << "Last element after pop_back:" << heap.at(size - 1)<< endl; // check to see what new end is
 
     int index = 0;
     int leftChild = 2*index + 1;
     int rightChild = 2*index + 2;
-
-    while((heap[index] > heap[leftChild] || heap[index] > heap[rightChild]) && (leftChild < size && rightChild < size)){
-        if(heap[leftChild] < heap[rightChild]){
-            swap(heap.at(index), heap.at(leftChild));
-            index = leftChild;
-        } else {
-            swap(heap.at(index), heap.at(rightChild));
-            index = rightChild;
-        }
-        leftChild = 2*index + 1;
-        rightChild = 2*index + 2;
-        size = heap.size();
+    if(size == 2 && heap.at(0) > heap.at(1)){
+        swap(heap.at(0), heap.at(1));
+    } else {
+        while((heap[index] > heap[leftChild] || heap[index] > heap[rightChild]) && (leftChild < size && rightChild < size)){
+            if(heap[leftChild] < heap[rightChild]){
+                swap(heap.at(index), heap.at(leftChild));
+                index = leftChild;
+            } else {
+                swap(heap.at(index), heap.at(rightChild));
+                index = rightChild;
+            }
+            leftChild = 2*index + 1;
+            rightChild = 2*index + 2;
+            size = heap.size();
+        } 
     }
     return min;
 
@@ -136,10 +139,10 @@ void BinaryHeap<T>::insert(T add) // like buildHeap()
             index = (index - 1)/ 2;
         }
     }
-    /* for(size_t i = 0; i < heap.size(); i++){
+    /*for(size_t i = 0; i < heap.size(); i++){
         cout << heap.at(i) << endl;
-    }*/
-    cout << endl;
+    } */
+    //cout << endl;
 }
 
 
