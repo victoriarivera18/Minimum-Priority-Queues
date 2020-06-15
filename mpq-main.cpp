@@ -96,17 +96,23 @@ int main()
     //insert into binary heap of CPU_Jobs
 
     //reading from file also
-    BinaryHeap<CPU_Job> myHeap;
-    string file4 = "Data file/SetSize4.txt";
+    BinaryHeap<CPU_Job> myHeap4;
+    BinaryHeap<CPU_Job> myHeap10;
+    BinaryHeap<CPU_Job> myHeap100;
+    BinaryHeap<CPU_Job> myHeap1000;
+    BinaryHeap<CPU_Job> myHeap10000;
+    BinaryHeap<CPU_Job> myHeap100000;
+
+    string file4 = "SetSize4.txt";
     string file10 = "SetSize10.txt";
     string file100 = "SetSize100.txt";
     string file1000 = "SetSize10000.txt";
     string file10000 = "SetSize10000.txt";
     string file100000 = "SetSize10000.txt";
 
-    ifstream ifs("SetSize10.txt");
+    ifstream ifs(file4);
     //ifstream ifs2(file10);
-    //ifstream ifs3(file100);
+   // ifstream ifs3(file100);
     //ifstream ifs4(file1000);
     //ifstream ifs5(file10000);
     //ifstream ifs6(file100000);
@@ -115,30 +121,99 @@ int main()
     string line;
     stringstream ss;
     
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    /*while(!ifs.eof()){ // only going into loop 1 time when doing 10
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
         CPU_Job temp(id, len, prior);
-        myHeap.insert(temp); // inserting job into heap
+        myHeap4.insert(temp); // inserting job into heap
+    }
+    ss.clear();
+    ifs.close();
+    ifs.clear();
+    ifs.open(file10);
+
+    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp1(id, len, prior);
+        myHeap10.insert(temp1); // inserting job into heap
     }
 
+    ss.clear();
+    ifs.close();
+    ifs.clear();
+    ifs.open(file100);
+    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp2(id, len, prior);
+        myHeap100.insert(temp2); // inserting job into heap
+    }
 
+    ss.clear();
+    ifs.close();
+    ifs.clear();
+    ifs.open(file1000);
+
+    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp3(id, len, prior);
+        myHeap1000.insert(temp3); // inserting job into heap
+    }*/
+
+    ss.clear();
+    ifs.close();
+    ifs.clear();
+    ifs.open(file10000);
+    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp4(id, len, prior);
+        myHeap10000.insert(temp4); // inserting job into heap
+    }
+
+    ss.clear();
+    ifs.close();
+    ifs.clear();
+    ifs.open(file100000);
+    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp5(id, len, prior);
+        myHeap100000.insert(temp5); // inserting job into heap
+    }
+    ifs.close();
 
     try {
+        /*while(!myHeap4.is_empty()){
+            cout << myHeap4.remove_min();
+        }
 
-        CPU_Job min = myHeap.remove_min();
-        cout << endl << min.prior << endl;
-        CPU_Job min2 = myHeap.remove_min();
-        cout << endl << min2.prior << endl;
-        CPU_Job min3 = myHeap.remove_min();
-        cout << endl << min3.prior << endl;
-        CPU_Job min4 = myHeap.remove_min();
-        cout << endl << min4.prior << endl;
-        CPU_Job min5 = myHeap.remove_min();
-        cout << endl << min5.prior << endl;
-        CPU_Job min6 = myHeap.remove_min();
-        cout << endl << min6.prior << endl;
+        cout << endl;
+        while(!myHeap10.is_empty()){
+            cout << myHeap10.remove_min();
+        }
+
+        cout << endl;
+        while(!myHeap100.is_empty()){
+            cout << myHeap100.remove_min();
+        }
+
+
+        while(!myHeap1000.is_empty()){
+            cout << myHeap1000.remove_min();
+        }*/
+
+        cout << myHeap10000.getSize()<< endl;;
+  
+
     } catch(EmptyTree){
         cout << "Tree is empty!" << endl;
     }

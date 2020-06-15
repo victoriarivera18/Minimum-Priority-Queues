@@ -40,13 +40,14 @@ class BinaryHeap
         T remove_min();
         bool is_empty(){ return heap.size() == 0;}
         void insert(T add);
+        int getSize(){return heap.size();}
 };
 // overload the () or the < operator for 2  CPU_Jobs
 bool CPU_Job::operator<(const CPU_Job& right) {
     if(this->prior < right.prior) { // higher priority
         return true;
     }else if(this->prior== right.prior){ // high priority id ID is less
-        if(this->prior < right.prior){
+        if(this->ID < right.ID){
             return true;
         } else {
             return false;
@@ -60,7 +61,7 @@ bool CPU_Job::operator>(const CPU_Job& right) {
     if(this->prior > right.prior) {
         return true;
     } else if(this->prior == right.prior){
-        if(this->prior > right.prior){
+        if(this->ID > right.ID){
             return true;
         } else{
             return false;
@@ -71,9 +72,7 @@ bool CPU_Job::operator>(const CPU_Job& right) {
 }
 ostream& operator << (ostream& os, const CPU_Job& r1) { // outputs certain records in stated format
     // O(1)
-    os << "Job ID: " << r1.ID << endl;
-    os << "Length: " << r1.length << endl;
-    os << "Priority: " << r1.prior << endl;
+    os << "Job " << r1.ID << " with length " << r1.length << " and priority " << r1.prior << endl;
     return os;
 }
 
