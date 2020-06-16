@@ -41,6 +41,7 @@ class BinaryHeap
         bool is_empty(){ return heap.size() == 0;}
         void insert(T add);
         int getSize(){return heap.size();}
+        void printHeap();
 };
 // overload the () or the < operator for 2  CPU_Jobs
 bool CPU_Job::operator<(const CPU_Job& right) {
@@ -105,10 +106,13 @@ T BinaryHeap<T>::remove_min()
     int index = 0;
     int leftChild = 2*index + 1;
     int rightChild = 2*index + 2;
+
+    //cout << leftChild << " " << rightChild << endl;
     if(size == 2 && heap.at(0) > heap.at(1)){
         swap(heap.at(0), heap.at(1));
     } else {
-        while((heap[index] > heap[leftChild] || heap[index] > heap[rightChild]) && (leftChild < size && rightChild < size)){
+        while((leftChild < getSize() && rightChild < getSize()) && (heap[index] > heap[leftChild] || heap[index] > heap[rightChild])){
+            //cout << " ---------------------" << endl;
             if(heap[leftChild] < heap[rightChild]){
                 swap(heap.at(index), heap.at(leftChild));
                 index = leftChild;
@@ -118,11 +122,19 @@ T BinaryHeap<T>::remove_min()
             }
             leftChild = 2*index + 1;
             rightChild = 2*index + 2;
-            size = heap.size();
+            //cout << leftChild << " " << rightChild <<  " "<<getSize() << endl;
         } 
     }
     return min;
 
+}
+template<typename T>
+void BinaryHeap<T>::printHeap()
+{
+    for(size_t i = 0; i < heap.size(); i++){
+        cout << heap.at(i);
+    }
+    //cout << endl;
 }
 
 template<typename T>
@@ -138,10 +150,6 @@ void BinaryHeap<T>::insert(T add) // like buildHeap()
             index = (index - 1)/ 2;
         }
     }
-    /*for(size_t i = 0; i < heap.size(); i++){
-        cout << heap.at(i) << endl;
-    } */
-    //cout << endl;
 }
 
 
