@@ -31,7 +31,7 @@ template<typename T, typename U>
 class MinPriorityQueue
 {   
     public:
-        vector<Pair<T, U>> mpq;
+        vector<T> mpq;
 
         MinPriorityQueue(int sz = 0): mpq(sz){}
         T remove_min();
@@ -41,12 +41,12 @@ class MinPriorityQueue
 };
 
 template<typename T, typename U>
-vector<Pair<T, U>> merge(vector<Pair<T, U>> left, vector<Pair<T, U>> right) 
+vector<T> merge(vector<T> left, vector<T> right) 
 {
-    vector<Pair<T, U>> result;
+    vector<T> result;
     while (left.size() > 0 || right.size() > 0) {
       if (left.size() > 0 && right.size() > 0) {
-         if (left.front().key <= right.front().key) {
+         if (left.front()< right.front()) {
             result.push_back((left.front()));
             left.erase(left.begin());
          } else {
@@ -67,12 +67,12 @@ vector<Pair<T, U>> merge(vector<Pair<T, U>> left, vector<Pair<T, U>> right)
 }
 
 template<typename T, typename U>
-vector<Pair<T, U>> mergeSort(vector<Pair<T, U>> m) 
+vector<T> mergeSort(vector<T> m) 
 {
    if (m.size() <= 1){
       return m;
     }
-    vector<Pair<T, U>> left, right, result;
+    vector<T> left, right, result;
     int middle = ((int)m.size()+ 1) / 2;
  
     for (int i = 0; i < middle; i++) {
