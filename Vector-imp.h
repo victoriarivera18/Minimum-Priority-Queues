@@ -7,61 +7,73 @@
 
 # include <iostream>
 # include <stdexcept>
-# include <fstream>
+# include <algorithm>  
 # include <vector>
+# include<bits/stdc++.h>
+# include "BinaryHeap.h"
+
 using namespace std;
 
 
-template<typename T>
-struct ItemV
+/* template<typename T, typename U> // testing struct from slides
+struct Pair
 {   
-    int key;
-    T element;
+    T key;
+    U element;
 
-    ItemV(int j = 0, T e = T()):key(j), element(e){} 
-    void setKey(int k){key = k;}
-    void setElement(T e){element = e;}
+    Pair(T j = T(), U e = U()):key(j), element(e){} 
+    void setKey(T k){key = k;}
+    void setElement(U e){element = e;}
     int get_key(){return key;}
-    T get_element(){return element;
-};
+    T get_element(){return element;}
+}; */
+
 
 template<typename T>
-class MinPriorityQueue
+class VecPriorityQueue
 {   
     private:
-        int mpq_size;
-        vector<ItemV<T>> mpq;
+        vector<T> mpq; // made public for easier implementation
     public:
-
-        MinPriorityQueue(int sz = 0): mpq_size(sz), mpq(sz, 0){}
-        int remove_min();
+        VecPriorityQueue(int sz = 0): mpq(sz){}
+        T remove_min();
         bool is_empty(){ return mpq.size() == 0;}
-        void insert_item(int k, T val);
-        int get_size(){return mpq.size();}
-        int get_key(int index){return  mpq.at(index).get_key();}
-        T get_element(int index){return mpq.at(index).get_element();}
-
+        void insert(T k);
 
 };
 
-template<typename T>
-void MinPriorityQueue<T>::insert_item(int k, T val)
-{
-    ItemV<T> add(k, val);
-    typename vector<ItemV<T>>::iterator it;
-    it = mpq.begin();
 
-    if(is_empty()){
-        mpq.push_back(add); 
-    }else if(k > (mpq.at(mpq.size()-1)).key){
-        mpq.push_back(add); // if at end
-    } else {
-        for(it = mpq.begin(); it < mpq.end() - 1; it++){
-            if(get_key(it) < k && get_key(it+1) > k){
-                mpq.insert(it, add);
+template<typename T>
+void VecPriorityQueue<T>::insert(T k) // O(n)
+{
+    if(is_empty()){ //front
+        mpq.push_back(k);
+    } else if (mpq.at(mpq.size() - 1) < k){ // back
+        mpq.push_back(k);
+    } else { // middle
+        for(size_t i = 0; i < mpq.size()-1; i++){
+            if(k < mpq.at(i)){
+                mpq.insert(mpq.begin() + i, k);
+                break;
             }
         }
     }
+
+}
+
+template<typename T>
+T VecPriorityQueue<T>::remove_min() // O(1), constant time bc only removing first element
+{
+    T min;
+    int index = 0;
+    if(is_empty()){
+        throw EmptyDLList("Tree is empty!");
+    } else {
+        min = mpq.at(0);
+        mpq.erase(mpq.begin());
+    }
+
+    return min;
 }
 
 
