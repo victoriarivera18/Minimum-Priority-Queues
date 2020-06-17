@@ -3,6 +3,9 @@
         "iostream": "cpp",
         "iosfwd": "cpp",
         "sstream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "stdexcept": "cpp",
+        "random": "cpp",
+        "ctime": "cpp"
     }
 }
