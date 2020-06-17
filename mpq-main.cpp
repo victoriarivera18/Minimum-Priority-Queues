@@ -105,7 +105,7 @@ Timing: 3171.88 milisec
 int main()
 {
     //Phase 1
-    VecPriorityQueue<int> myHeap1; // vector
+    /*VecPriorityQueue<int> myHeap1; // vector
     LinkedList<int> myllHeap1; // linked list
 
     myHeap1.insert(2); //insert runs at O(n)
@@ -413,7 +413,12 @@ int main()
     cout << "Timing: " << diff8 << " milisec" << endl; 
 
     double diff9 = (double)(t36 - t35)*1000/CLOCKS_PER_SEC; 
-    cout << "Timing: " << diff9 << " milisec" << endl;
+    cout << "Timing: " << diff9 << " milisec" << endl; */
+
+    // getting output files from SetSeize4.txt and SetSize10.txt
+
+
+
 
     return 0;
 }
