@@ -42,61 +42,23 @@ class MinPriorityQueue
 
 };
 
-template<typename T>
-vector<T> merge(vector<T> left, vector<T> right) 
-{
-    vector<T> result;
-    while (left.size() > 0 || right.size() > 0) {
-      if (left.size() > 0 && right.size() > 0) {
-         if (left.front() < right.front()) { // overload operator
-            result.push_back((left.front()));
-            left.erase(left.begin());
-         } else {
-            result.push_back(right.front());
-            right.erase(right.begin());
-         }
-      }else if((int)left.size() > 0) {
-            for (int i = 0; i < (int)left.size(); i++)
-                result.push_back(left[i]);
-            break;
-      }else if((int)right.size() > 0) {
-            for (int i = 0; i < (int)right.size(); i++)
-               result.push_back(right[i]);
-            break;
-      }
-   }
-   return result; 
-}
-
-template<typename T>
-vector<T> mergeSort(vector<T> m) 
-{
-   if (m.size() <= 1){
-      return m;
-    }
-    vector<T> left, right, result;
-    int middle = ((int)m.size()+ 1) / 2;
- 
-    for (int i = 0; i < middle; i++) {
-        left.push_back(m[i]);
-    }
-
-    for (int i = middle; i < (int)m.size(); i++) {
-        right.push_back(m[i]);
-    }
- 
-    left = mergeSort(left);
-    right = mergeSort(right);
-    result = merge(left, right);
- 
-    return result;
-}
 
 template<typename T>
 void MinPriorityQueue<T>::insert(T k)
 {
-    mpq.push_back(k);
-    mpq = mergeSort(this->mpq);
+    if(is_empty()){ //front
+        mpq.push_back(k);
+    } else if (mpq.at(mpq.size() - 1) < k){ // back
+        mpq.push_back(k);
+    } else { // middle
+        for(size_t i = 0; i < mpq.size()-1; i++){
+            if(k < mpq.at(i)){
+                mpq.insert(mpq.begin() + i, k);
+                break;
+            }
+        }
+    }
+
 }
 
 template<typename T>
