@@ -10,6 +10,7 @@
 # include <algorithm>  
 # include <vector>
 # include<bits/stdc++.h>
+# include "BinaryHeap.h"
 
 using namespace std;
 
@@ -27,7 +28,8 @@ struct Pair
     T get_element(){return element;}
 };
 
-template<typename T, typename U>
+
+template<typename T>
 class MinPriorityQueue
 {   
     public:
@@ -36,17 +38,17 @@ class MinPriorityQueue
         MinPriorityQueue(int sz = 0): mpq(sz){}
         T remove_min();
         bool is_empty(){ return mpq.size() == 0;}
-        void insert(T k, U val);
+        void insert(T k);
 
 };
 
-template<typename T, typename U>
+template<typename T>
 vector<T> merge(vector<T> left, vector<T> right) 
 {
     vector<T> result;
     while (left.size() > 0 || right.size() > 0) {
       if (left.size() > 0 && right.size() > 0) {
-         if (left.front()< right.front()) {
+         if (left.front() < right.front()) { // overload operator
             result.push_back((left.front()));
             left.erase(left.begin());
          } else {
@@ -66,7 +68,7 @@ vector<T> merge(vector<T> left, vector<T> right)
    return result; 
 }
 
-template<typename T, typename U>
+template<typename T>
 vector<T> mergeSort(vector<T> m) 
 {
    if (m.size() <= 1){
@@ -90,22 +92,23 @@ vector<T> mergeSort(vector<T> m)
     return result;
 }
 
-template<typename T, typename U>
-void MinPriorityQueue<T, U>::insert(T k, U val)
+template<typename T>
+void MinPriorityQueue<T>::insert(T k)
 {
-    Pair<T, U>* add = new Pair<T, U>(k, val);
-    mpq.push_back((*add));
+    mpq.push_back(k);
     mpq = mergeSort(this->mpq);
 }
 
-template<typename T, typename U>
-T MinPriorityQueue<T, U>::remove_min()
+template<typename T>
+T MinPriorityQueue<T>::remove_min()
 {
-    T min = mpq.at(0).key;
+    T min;
     int index = 0;
-    while (mpq.at(index).key == min && mpq.size() != 0){
+    if(is_empty()){
+        throw EmptyDLList("Tree is empty!");
+    } else {
+        min = mpq.at(0);
         mpq.erase(mpq.begin());
-        index++;
     }
 
     return min;

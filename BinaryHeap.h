@@ -21,6 +21,7 @@ struct CPU_Job
     CPU_Job(int a=0, int b=0, int c=0):ID(a), length(b), prior(c){}
     bool operator<(const CPU_Job& right);
     bool operator>(const CPU_Job& right);
+    bool operator==(const CPU_Job& right);
     //bool operator<(const CPU_Job& job); // compares jobs priorities and/or IDs
 };
 
@@ -71,6 +72,19 @@ bool CPU_Job::operator>(const CPU_Job& right) {
         return false;
     }
 }
+
+bool CPU_Job::operator==(const CPU_Job& right) {
+    if(this->prior == right.prior) {
+        if(this->ID == right.ID){
+            if(this->length > right.length){
+            return true;
+            }
+        }
+    }
+     return false;
+}
+
+
 ostream& operator << (ostream& os, const CPU_Job& r1) { // outputs certain records in stated format
     // O(1)
     os << "Job " << r1.ID << " with length " << r1.length << " and priority " << r1.prior << endl;
