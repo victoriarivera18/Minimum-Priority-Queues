@@ -104,6 +104,54 @@ Timing: 3171.88 milisec
 
 int main()
 {
+    //Phase 1
+    VecPriorityQueue<int> myHeap1; // vector
+    LinkedList<int> myllHeap1; // linked list
+
+    myHeap1.insert(2); //insert runs at O(n)
+    myHeap1.insert(4);
+    myHeap1.insert(9);
+    myHeap1.insert(-3);
+    myHeap1.insert(22);
+    myHeap1.insert(1);
+    myHeap1.insert(25);
+    myHeap1.insert(-4);
+
+    while(!myHeap1.is_empty()){ 
+        cout << myHeap1.remove_min() << endl; // remove runs at O(1)
+    }
+    cout << endl;
+
+    myllHeap1.insert(2);  //insert runs at O(n)
+    myllHeap1.insert(6);
+    myllHeap1.insert(9);
+    myllHeap1.insert(-5);
+    myllHeap1.insert(-11);
+    myllHeap1.insert(21);
+    myllHeap1.insert(0);
+
+    while(!myllHeap1.is_empty()){  
+        cout << myllHeap1.remove_min() << endl; // remove runs at O(1)
+    }
+
+
+    //Phase 2
+    cout << endl;
+    BinaryHeap<int> myBHeap1;  // binary heap
+    myBHeap1.insert(5); //insert runs at O(logn)
+    myBHeap1.insert(6);
+    myBHeap1.insert(-10);
+    myBHeap1.insert(-9);
+    myBHeap1.insert(2);
+    myBHeap1.insert(21);
+    myBHeap1.insert(55);
+    myBHeap1.insert(7);
+
+    while(!myBHeap1.is_empty()){ 
+        cout << myBHeap1.remove_min() << endl;//remove runs at O(logn)
+    }
+
+    //Phase 3
     clock_t t1, t2, t3, t4, t5, t6; 
     clock_t t21, t22, t23, t24, t25, t26;
     clock_t t31, t32, t33, t34, t35, t36;
@@ -124,7 +172,7 @@ int main()
 
     // 1.
     t1 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ // loops through  1000 times
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
@@ -133,7 +181,7 @@ int main()
     }
 
     cout << "SetSize 1000:: " << endl;
-    while(!myllHeap1000.is_empty()){
+    while(!myllHeap1000.is_empty()){ // loops through  1000 times
         cout << myllHeap1000.remove_min();
     }
     cout << "No more jobs to run"<< endl;
@@ -146,7 +194,7 @@ int main()
 
     // 2.
     t3 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ // loops through  10000 times
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
@@ -156,7 +204,7 @@ int main()
 
     cout << endl;
     cout << "SetSize 10000:: " << endl;
-    while(!myllHeap10000.is_empty()){
+    while(!myllHeap10000.is_empty()){ // loops through  10000 times
         cout << myllHeap10000.remove_min();
     }
     cout << "No more jobs to run"<< endl;
@@ -170,7 +218,7 @@ int main()
 
     //3. 
     t5 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ // loops through  100000 times
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
@@ -179,8 +227,8 @@ int main()
     }
     cout << endl;
     cout << "SetSize 100000:: " << endl;
-    while(!myllHeap100000.is_empty()){
-        cout << myllHeap100000.remove_min();
+    while(!myllHeap100000.is_empty()){ // loops through  100000 times
+        cout << myllHeap100000.remove_min(); 
     }
     cout << "No more jobs to run"<< endl;
     t6 = clock(); //stop
@@ -190,9 +238,9 @@ int main()
     ifs.close();
 
     // the vector implementation
-    MinPriorityQueue<CPU_Job> myVHeap1000; //works
-    MinPriorityQueue<CPU_Job> myVHeap10000; //works
-    MinPriorityQueue<CPU_Job> myVHeap100000; //works
+    VecPriorityQueue<CPU_Job> myVHeap1000; //works
+    VecPriorityQueue<CPU_Job> myVHeap10000; //works
+    VecPriorityQueue<CPU_Job> myVHeap100000; //works
 
 
     ifs.open(file1000);
@@ -223,12 +271,12 @@ int main()
 
     // 5. 
     t23 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ 
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
         CPU_Job temp4(id, len, prior);
-        myVHeap10000.insert(temp4); // inserting job into heap
+        myVHeap10000.insert(temp4); 
     }
 
     cout << "SetSize 10000:: " << endl;
@@ -246,12 +294,12 @@ int main()
 
     //6.
     t25 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ 
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
         CPU_Job temp5(id, len, prior);
-        myVHeap100000.insert(temp5); // inserting job into heap
+        myVHeap100000.insert(temp5); 
     }
     cout << endl;
     cout << "SetSize 100000:: " << endl;
@@ -276,12 +324,12 @@ int main()
     
     // 7.
     t31 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ 
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
         CPU_Job temp(id, len, prior);
-        myHeap1000.insert(temp); // inserting job into heap
+        myHeap1000.insert(temp); 
     }
 
     cout << "SetSize 1000:: " << endl;
@@ -298,12 +346,12 @@ int main()
 
     // 8.
     t33 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ 
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
         CPU_Job temp1(id, len, prior);
-        myHeap10000.insert(temp1); // inserting job into heap
+        myHeap10000.insert(temp1); 
     }
     cout << endl;
     cout << "SetSize 10000:: " << endl;
@@ -320,12 +368,12 @@ int main()
 
     // 9.
     t35 = clock(); //start
-    while(!ifs.eof()){ // only going into loop 1 time when doing 10
+    while(!ifs.eof()){ 
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
         CPU_Job temp2(id, len, prior);
-        myHeap100000.insert(temp2); // inserting job into heap
+        myHeap100000.insert(temp2); 
     }
 
     cout << endl;
@@ -339,6 +387,7 @@ int main()
     ifs.clear();
     ifs.close();
 
+    // printing of timings
     double diff1 = (double)(t2 - t1)*1000/CLOCKS_PER_SEC; 
     cout << "Timing: " << diff1 << " milisec" << endl; 
 
@@ -365,9 +414,6 @@ int main()
 
     double diff9 = (double)(t36 - t35)*1000/CLOCKS_PER_SEC; 
     cout << "Timing: " << diff9 << " milisec" << endl;
-       
-
-
 
     return 0;
 }

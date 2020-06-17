@@ -11,16 +11,16 @@
 # include <cmath>
 using namespace std;
 
-//unsorted linked list implementation of a MPQ
+
 template<typename T>
-struct Item {
+struct Item { // container for type T
     T value; 
     Item<T> *prev, *next;
     // constructor
     Item(T e = T(), Item<T>* n=nullptr, Item<T>* m=nullptr):value(e), prev(n), next(m){}
 };
 
-// one header and the end of the list is designated by nullptr
+// doubly linked list implementation
 template<typename T>
 class LinkedList {
     private:
@@ -35,12 +35,13 @@ class LinkedList {
         void insert_first(T obj);
         void insert_before(Item<T> &p, T obj);
 };
+
 struct EmptyDLList : public std::runtime_error {
   explicit EmptyDLList(char const* msg=nullptr): runtime_error(msg) {}
 };
 
 template<typename T>
-void LinkedList<T>::insert_first(T obj)
+void LinkedList<T>::insert_first(T obj) // O(1)
 { 
   Item<T> *toAdd = new Item<T>(obj, &head, head.next);
   head.next->prev = toAdd;
@@ -49,7 +50,7 @@ void LinkedList<T>::insert_first(T obj)
 
 
 template<typename T>
-void LinkedList<T>::insert_before(Item<T> &p, T obj)
+void LinkedList<T>::insert_before(Item<T> &p, T obj) // O(1)
 {
   //check if previous is "head"
   if(p.prev == &head) {
@@ -62,7 +63,7 @@ void LinkedList<T>::insert_before(Item<T> &p, T obj)
 }
 
 template<typename T>
-void LinkedList<T>::insert(T k) // insert to end of the list
+void LinkedList<T>::insert(T k) // O(n) finds correct postion to insert node
 {
 
     if(is_empty()){
@@ -88,7 +89,7 @@ void LinkedList<T>::insert(T k) // insert to end of the list
 }
 
 template<typename T>
-T LinkedList<T>::remove_min() // delete first node
+T LinkedList<T>::remove_min() // O(1), removes first node
 {
   if (is_empty()){
     throw EmptyDLList("List is empty!");

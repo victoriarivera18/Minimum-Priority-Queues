@@ -15,7 +15,7 @@
 using namespace std;
 
 
-template<typename T, typename U>
+/* template<typename T, typename U> // testing struct from slides
 struct Pair
 {   
     T key;
@@ -26,16 +26,16 @@ struct Pair
     void setElement(U e){element = e;}
     int get_key(){return key;}
     T get_element(){return element;}
-};
+}; */
 
 
 template<typename T>
-class MinPriorityQueue
+class VecPriorityQueue
 {   
+    private:
+        vector<T> mpq; // made public for easier implementation
     public:
-        vector<T> mpq;
-
-        MinPriorityQueue(int sz = 0): mpq(sz){}
+        VecPriorityQueue(int sz = 0): mpq(sz){}
         T remove_min();
         bool is_empty(){ return mpq.size() == 0;}
         void insert(T k);
@@ -44,7 +44,7 @@ class MinPriorityQueue
 
 
 template<typename T>
-void MinPriorityQueue<T>::insert(T k)
+void VecPriorityQueue<T>::insert(T k) // O(n)
 {
     if(is_empty()){ //front
         mpq.push_back(k);
@@ -62,7 +62,7 @@ void MinPriorityQueue<T>::insert(T k)
 }
 
 template<typename T>
-T MinPriorityQueue<T>::remove_min()
+T VecPriorityQueue<T>::remove_min() // O(1), constant time bc only removing first element
 {
     T min;
     int index = 0;

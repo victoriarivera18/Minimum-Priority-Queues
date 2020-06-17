@@ -44,8 +44,10 @@ class BinaryHeap
         int getSize(){return heap.size();}
         void printHeap();
 };
-// overload the () or the < operator for 2  CPU_Jobs
-bool CPU_Job::operator<(const CPU_Job& right) {
+
+
+
+bool CPU_Job::operator<(const CPU_Job& right) { // O(1)
     if(this->prior < right.prior) { // higher priority
         return true;
     }else if(this->prior== right.prior){ // high priority id ID is less
@@ -59,7 +61,7 @@ bool CPU_Job::operator<(const CPU_Job& right) {
     }
 }
 
-bool CPU_Job::operator>(const CPU_Job& right) {
+bool CPU_Job::operator>(const CPU_Job& right) { // O(1)
     if(this->prior > right.prior) {
         return true;
     } else if(this->prior == right.prior){
@@ -73,7 +75,7 @@ bool CPU_Job::operator>(const CPU_Job& right) {
     }
 }
 
-bool CPU_Job::operator==(const CPU_Job& right) {
+bool CPU_Job::operator==(const CPU_Job& right) { // O(1)
     if(this->prior == right.prior) {
         if(this->ID == right.ID){
             if(this->length > right.length){
@@ -93,7 +95,7 @@ ostream& operator << (ostream& os, const CPU_Job& r1) { // outputs certain recor
 
 
 template<typename T>
-T BinaryHeap<T>::remove_min()
+T BinaryHeap<T>::remove_min() // O(logn)
 {
     // pop the top element
     // restructure the heap to have new min at the top
@@ -107,15 +109,11 @@ T BinaryHeap<T>::remove_min()
     }
 
     T min = heap.at(0);
-    //cout << "Min now: "<< heap.at(0); // check to see what new end is
     int size = heap.size();
-    //cout << "End element after before swap: " <<  heap.at(size - 1) << endl; // check to see what new end is
     swap(heap.at(0), heap.at(size - 1)); // swapping first and last elements
-    //cout << "End element after swap now: " <<  heap.at(size - 1)<< endl; // check to see what new end is
     heap.pop_back(); //delete old min
     size = heap.size(); // new size of vector
-    //cout << "Min after swap: "<< heap.at(0)<< endl;
-    //cout << "Last element after pop_back:" << heap.at(size - 1)<< endl; // check to see what new end is
+    
 
     int index = 0;
     int leftChild = 2*index + 1;
@@ -152,7 +150,7 @@ void BinaryHeap<T>::printHeap()
 }
 
 template<typename T>
-void BinaryHeap<T>::insert(T add) // like buildHeap()
+void BinaryHeap<T>::insert(T add) // O(logn)
 {
     heap.push_back(add);
     int index = heap.size() - 1;
