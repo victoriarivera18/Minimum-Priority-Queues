@@ -31,18 +31,94 @@ struct EmptyTree : public std::runtime_error {
 };
 
 
+template<typename T>
+class BinaryHeapObj //obj
+{
+    public:
+        vector<T> vect;
+        BinaryHeapObj(int sz = 0): vect(sz){}
+        T remove_min();
+        bool is_empty(){ return vect.size() == 0;}
+        void insert(T add);
+        int getSize(){return vect.size();}
+
+};
+
+template<typename T>
+T BinaryHeapObj<T>::remove_min() // O(logn) (does walk downs)
+{
+    // pop the top element
+    // restructure the heap to have new min at the top
+    // everything else also in mpq order
+    if (vect.size() == 0){
+        throw EmptyTree("Queue is empty!");
+    } else if (vect.size() == 1){
+        T min = vect.at(0);
+        vect.pop_back();
+        return min;
+    }
+
+    T min = vect.at(0);
+    int size = vect.size();
+    swap(vect.at(0), vect.at(size - 1)); // swapping first and last elements
+    vect.pop_back(); //delete old min
+    size = vect.size(); // new size of vector
+    
+
+    int index = 0;
+    int leftChild = 2*index + 1;
+    int rightChild = 2*index + 2;
+
+    //cout << leftChild << " " << rightChild << endl;
+    if(size == 2 && vect.at(0) > vect.at(1)){
+        swap(vect.at(0), vect.at(1));
+    } else {
+        while((leftChild < getSize() && rightChild < getSize()) && (vect[index] > vect[leftChild] || vect[index] > vect[rightChild])){
+            //cout << " ---------------------" << endl;
+            if(vect[leftChild] < vect[rightChild]){
+                swap(vect.at(index), vect.at(leftChild));
+                index = leftChild;
+            } else {
+                swap(vect.at(index), vect.at(rightChild));
+                index = rightChild;
+            }
+            leftChild = 2*index + 1;
+            rightChild = 2*index + 2;
+            //cout << leftChild << " " << rightChild <<  " "<<getSize() << endl;
+        } 
+    }
+    return min;
+}
+
+template<typename T>
+void BinaryHeapObj<T>::insert(T add) // O(logn) (does walk ups)
+{
+    vect.push_back(add);
+    int index = vect.size() - 1;
+    if(vect.size() > 1){
+        while(index >= 1){
+            if (vect.at(index) < vect.at((index - 1) / 2)){
+                swap(vect.at(index), vect.at((index - 1)/ 2));
+            }
+            index = (index - 1)/ 2;
+        }
+    }
+}
+
+
+
 //binary heap implementation using a vector
 template<typename T>
-class BinaryHeap
+class BinaryHeap // wrapper
 {
     private:
-        BinaryHeapObj heap; //vector can be of type CPU_Job
+        BinaryHeapObj<T> heap; //vector can be of type CPU_Job
     public:
-        BinaryHeap(int sz = 0): heap(sz){}
-        T remove_min();
-        bool is_empty(){ return heap.size() == 0;}
-        void insert(T add);
-        int getSize(){return heap.size();}
+        BinaryHeap(int size = 0): heap(size){}
+        T remove_min() { return heap.remove_min(); }
+        bool is_empty(){ return heap.getSize() == 0; }
+        void insert(T add){ heap.insert(add); }
+        int getSize(){ return heap.getSize(); }
         void printHeap();
 };
 
@@ -96,72 +172,10 @@ ostream& operator << (ostream& os, const CPU_Job& r1) { // outputs certain recor
 
 
 template<typename T>
-T BinaryHeap<T>::remove_min() // O(logn)
-{
-    // pop the top element
-    // restructure the heap to have new min at the top
-    // everything else also in mpq order
-    if (heap.size() == 0){
-        throw EmptyTree("Queue is empty!");
-    } else if (heap.size() == 1){
-        T min = heap.at(0);
-        heap.pop_back();
-        return min;
-    }
-
-    T min = heap.at(0);
-    int size = heap.size();
-    swap(heap.at(0), heap.at(size - 1)); // swapping first and last elements
-    heap.pop_back(); //delete old min
-    size = heap.size(); // new size of vector
-    
-
-    int index = 0;
-    int leftChild = 2*index + 1;
-    int rightChild = 2*index + 2;
-
-    //cout << leftChild << " " << rightChild << endl;
-    if(size == 2 && heap.at(0) > heap.at(1)){
-        swap(heap.at(0), heap.at(1));
-    } else {
-        while((leftChild < getSize() && rightChild < getSize()) && (heap[index] > heap[leftChild] || heap[index] > heap[rightChild])){
-            //cout << " ---------------------" << endl;
-            if(heap[leftChild] < heap[rightChild]){
-                swap(heap.at(index), heap.at(leftChild));
-                index = leftChild;
-            } else {
-                swap(heap.at(index), heap.at(rightChild));
-                index = rightChild;
-            }
-            leftChild = 2*index + 1;
-            rightChild = 2*index + 2;
-            //cout << leftChild << " " << rightChild <<  " "<<getSize() << endl;
-        } 
-    }
-    return min;
-
-}
-template<typename T>
 void BinaryHeap<T>::printHeap()
 {
-    for(size_t i = 0; i < heap.size(); i++){
-        cout << heap.at(i);
-    }
-    //cout << endl;
-}
-
-template<typename T>
-void BinaryHeap<T>::insert(T add) // O(logn)
-{
-    heap.push_back(add);
-    int index = heap.size() - 1;
-    if(heap.size() > 1){
-        while(index >= 1){
-            if (heap.at(index) < heap.at((index - 1) / 2)){
-                swap(heap.at(index), heap.at((index - 1)/ 2));
-            }
-            index = (index - 1)/ 2;
-        }
+    for(size_t i = 0; i < heap.getSize(); i++){
+        cout << heap.vect.at(i);
     }
 }
 

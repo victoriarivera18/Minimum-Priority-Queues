@@ -1,0 +1,5 @@
+Job 382 with length 3 and priority -7
+Job 825 with length 2 and priority 5
+Job 281 with length 1 and priority 12
+Job 111 with length 4 and priority 19
+No more jobs to run

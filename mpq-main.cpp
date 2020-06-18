@@ -108,6 +108,7 @@ int main()
     VecPriorityQueue<int> myHeap1; // vector
     LinkedList<int> myllHeap1; // linked list
 
+    cout << "Vector:: " << endl;
     myHeap1.insert(2); //insert runs at O(1)
     myHeap1.insert(4);
     myHeap1.insert(9);
@@ -127,10 +128,11 @@ int main()
 
 
     while(!myHeap1.is_empty()){ 
-        cout << myHeap1.remove_min() << endl; // remove runs at O(1)
+        cout << myHeap1.remove_min() << endl; // remove runs at O(n)
     }
     cout << endl;
 
+    cout << "Linked List:: " << endl;
     myllHeap1.insert(2);  //insert runs at O(n)
     myllHeap1.insert(6);
     myllHeap1.insert(9);
@@ -146,7 +148,8 @@ int main()
 
     //Phase 2
     cout << endl;
-    BinaryHeap<int> myBHeap1;  // binary heap
+    cout << "Binary Heap::" << endl;
+    BinaryHeapObj<int> myBHeap1;  // binary heap obj
     myBHeap1.insert(5); //insert runs at O(logn)
     myBHeap1.insert(6);
     myBHeap1.insert(-10);
@@ -157,8 +160,22 @@ int main()
     myBHeap1.insert(7);
 
     while(!myBHeap1.is_empty()){ 
-        cout << myBHeap1.remove_min() << endl;//remove runs at O(logn)
+        cout << myBHeap1.remove_min() << endl; //remove runs at O(logn)
+    } 
+
+    cout << endl;
+    cout << "Binary Heap MPQ::" << endl;
+    BinaryHeap<CPU_Job> myBHeap0;  // binary heap mpq
+    myBHeap0.insert(CPU_Job(11, 2, 6)); //insert runs at O(logn)
+    myBHeap0.insert(CPU_Job(4, 1, 6));
+    myBHeap0.insert(CPU_Job(3, 12, 6));
+    myBHeap0.insert(CPU_Job(5, 4, 7));
+    myBHeap0.insert(CPU_Job(1, 3, 3));
+
+    while(!myBHeap0.is_empty()){ 
+        cout << myBHeap0.remove_min() << endl;//remove runs at O(logn)
     }
+
 
     //Phase 3
     clock_t t1, t2, t3, t4, t5, t6; 
@@ -167,7 +184,7 @@ int main()
     // LinkedList implentation
     LinkedList<CPU_Job> myllHeap4; //for output files 
     LinkedList<CPU_Job> myllHeap10; 
-    LinkedList<CPU_Job> myllHeap100; //writing data file
+    LinkedList<CPU_Job> myllHeap100;
 
     LinkedList<CPU_Job> myllHeap1000; //works
     LinkedList<CPU_Job> myllHeap10000; //works
@@ -187,12 +204,11 @@ int main()
 
     ifstream ifs(file4);
     ofstream MyFile("Data4.txt"); //output file opening
-    // MyFile.close();
     //reading files using linked list
     //rest is outputted to the terminal
     // all files are correct
 
-    /*while(!ifs.eof()){ 
+    while(!ifs.eof()){ 
         getline(ifs, line);
         ss << line;
         ss >> id >> len >> prior;
@@ -210,7 +226,6 @@ int main()
 
     ifs.open(file10);
     MyFile.open("Data10.txt"); //output file opening
-    // MyFile.close();
 
     while(!ifs.eof()){ 
         getline(ifs, line);
@@ -256,6 +271,7 @@ int main()
 
     ifs.open(file1000);
 
+    //starting official time testing for the 3 bigger files for each implementation
     // 1.
     MyFile.open("Data1000.txt");
     t1 = clock(); //start timing
@@ -317,7 +333,7 @@ int main()
     }
     MyFile  << "No more jobs to run"<< endl;
     t6 = clock(); //stop
-    MyFile.close(); */
+    MyFile.close(); 
 
     ss.clear();
     ifs.clear();
@@ -498,7 +514,6 @@ int main()
 
     double diff9 = (double)(t36 - t35)*1000/CLOCKS_PER_SEC; 
     cout << "Timing: " << diff9 << " milisec" << endl; 
-
     return 0;
 }
 
