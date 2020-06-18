@@ -44,9 +44,10 @@ class VecPriorityQueue
 
 
 template<typename T>
-void VecPriorityQueue<T>::insert(T k) // O(n)
+void VecPriorityQueue<T>::insert(T k) // O(1)
 {
-    if(is_empty()){ //front
+    mpq.push_back(k);
+    /*if(is_empty()){ //front
         mpq.push_back(k);
     } else if (mpq.at(mpq.size() - 1) < k){ // back
         mpq.push_back(k);
@@ -57,12 +58,12 @@ void VecPriorityQueue<T>::insert(T k) // O(n)
                 break;
             }
         }
-    }
+    } */
 
 }
 
 template<typename T>
-T VecPriorityQueue<T>::remove_min() // O(1), constant time bc only removing first element
+T VecPriorityQueue<T>::remove_min() // O(n), searches for min every time
 {
     T min;
     int index = 0;
@@ -70,9 +71,17 @@ T VecPriorityQueue<T>::remove_min() // O(1), constant time bc only removing firs
         throw EmptyDLList("Tree is empty!");
     } else {
         min = mpq.at(0);
-        mpq.erase(mpq.begin());
+        //mpq.erase(mpq.begin());
+        for (size_t i= 1; i < mpq.size(); i++){
+            if(mpq.at(i) < min){
+                min = mpq.at(i);
+                index = i;
+            }
+        }
     }
 
+    mpq.erase(mpq.begin() + index);
+    //cout << "Size:: " << mpq.size() <<endl;
     return min;
 }
 

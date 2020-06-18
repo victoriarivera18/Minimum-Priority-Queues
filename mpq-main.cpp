@@ -105,10 +105,10 @@ Timing: 3171.88 milisec
 int main()
 {
     //Phase 1
-    /*VecPriorityQueue<int> myHeap1; // vector
+    VecPriorityQueue<int> myHeap1; // vector
     LinkedList<int> myllHeap1; // linked list
 
-    myHeap1.insert(2); //insert runs at O(n)
+    myHeap1.insert(2); //insert runs at O(1)
     myHeap1.insert(4);
     myHeap1.insert(9);
     myHeap1.insert(-3);
@@ -116,6 +116,15 @@ int main()
     myHeap1.insert(1);
     myHeap1.insert(25);
     myHeap1.insert(-4);
+    myHeap1.insert(-5);
+    myHeap1.insert(79);
+    myHeap1.insert(-7);
+    myHeap1.insert(11);
+    myHeap1.insert(-44);
+    myHeap1.insert(56);
+    myHeap1.insert(100);
+    myHeap1.insert(99);
+
 
     while(!myHeap1.is_empty()){ 
         cout << myHeap1.remove_min() << endl; // remove runs at O(1)
@@ -156,22 +165,100 @@ int main()
     clock_t t21, t22, t23, t24, t25, t26;
     clock_t t31, t32, t33, t34, t35, t36;
     // LinkedList implentation
+    LinkedList<CPU_Job> myllHeap4; //for output files 
+    LinkedList<CPU_Job> myllHeap10; 
+    LinkedList<CPU_Job> myllHeap100; //writing data file
+
     LinkedList<CPU_Job> myllHeap1000; //works
     LinkedList<CPU_Job> myllHeap10000; //works
     LinkedList<CPU_Job> myllHeap100000; //works
 
+    string file4 = "SetSize4.txt";
+    string file10 = "SetSize10.txt";
+    string file100 = "SetSize100.txt";
     string file1000 = "SetSize1000.txt";
     string file10000 = "SetSize10000.txt";
     string file100000 = "SetSize100000.txt";
-
-    ifstream ifs(file1000);
 
     int id, len, prior;
     string line;
     stringstream ss;
 
+
+    ifstream ifs(file4);
+    ofstream MyFile("Data4.txt"); //output file opening
+    // MyFile.close();
+    //reading files using linked list
+    //rest is outputted to the terminal
+    // all files are correct
+
+    /*while(!ifs.eof()){ 
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp0(id, len, prior);
+        myllHeap4.insert(temp0); 
+    }
+    while(!myllHeap4.is_empty()){
+        MyFile << myllHeap4.remove_min();
+    }
+    MyFile << "No more jobs to run"<< endl;
+    MyFile.close(); //close file
+    ss.clear();
+    ifs.clear();
+    ifs.close();
+
+    ifs.open(file10);
+    MyFile.open("Data10.txt"); //output file opening
+    // MyFile.close();
+
+    while(!ifs.eof()){ 
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp01(id, len, prior);
+        myllHeap10.insert(temp01); 
+    }
+
+    while(!myllHeap10.is_empty()){
+        MyFile << myllHeap10.remove_min();
+    }
+    MyFile << "No more jobs to run"<< endl;
+    MyFile.close(); //close file
+    ss.clear();
+    ifs.clear();
+    ifs.close();
+
+    ifs.open(file100);
+    MyFile.open("Data100.txt"); //open new file
+    
+
+    while(!ifs.eof()){ // loops through  1000 times
+        getline(ifs, line);
+        ss << line;
+        ss >> id >> len >> prior;
+        CPU_Job temp02(id, len, prior);
+        myllHeap100.insert(temp02); // inserting job into heap
+    }
+
+
+    while(!myllHeap100.is_empty()){ // loops through  1000 times
+        MyFile << myllHeap100.remove_min();
+    }
+    MyFile << "No more jobs to run"<< endl;
+    cout << endl;
+    MyFile.close();
+    ss.clear();
+    ifs.clear();
+    ifs.close(); 
+
+
+
+    ifs.open(file1000);
+
     // 1.
-    t1 = clock(); //start
+    MyFile.open("Data1000.txt");
+    t1 = clock(); //start timing
     while(!ifs.eof()){ // loops through  1000 times
         getline(ifs, line);
         ss << line;
@@ -180,12 +267,12 @@ int main()
         myllHeap1000.insert(temp3); // inserting job into heap
     }
 
-    cout << "SetSize 1000:: " << endl;
     while(!myllHeap1000.is_empty()){ // loops through  1000 times
-        cout << myllHeap1000.remove_min();
+        MyFile << myllHeap1000.remove_min();
     }
-    cout << "No more jobs to run"<< endl;
+    MyFile << "No more jobs to run"<< endl;
     t2 = clock(); // stop
+    MyFile.close();
 
     ss.clear();
     ifs.close();
@@ -193,6 +280,7 @@ int main()
     ifs.open(file10000);
 
     // 2.
+    MyFile.open("Data10000.txt");
     t3 = clock(); //start
     while(!ifs.eof()){ // loops through  10000 times
         getline(ifs, line);
@@ -202,14 +290,12 @@ int main()
         myllHeap10000.insert(temp4); // inserting job into heap
     }
 
-    cout << endl;
-    cout << "SetSize 10000:: " << endl;
     while(!myllHeap10000.is_empty()){ // loops through  10000 times
-        cout << myllHeap10000.remove_min();
+        MyFile << myllHeap10000.remove_min();
     }
-    cout << "No more jobs to run"<< endl;
+    MyFile << "No more jobs to run"<< endl;
     t4 = clock(); //stop
-    
+    MyFile.close();
 
     ss.clear();
     ifs.close();
@@ -217,6 +303,7 @@ int main()
     ifs.open(file100000);
 
     //3. 
+    MyFile.open("Data100000.txt");
     t5 = clock(); //start
     while(!ifs.eof()){ // loops through  100000 times
         getline(ifs, line);
@@ -225,17 +312,16 @@ int main()
         CPU_Job temp5(id, len, prior);
         myllHeap100000.insert(temp5); // inserting job into heap
     }
-    cout << endl;
-    cout << "SetSize 100000:: " << endl;
     while(!myllHeap100000.is_empty()){ // loops through  100000 times
-        cout << myllHeap100000.remove_min(); 
+        MyFile  << myllHeap100000.remove_min(); 
     }
-    cout << "No more jobs to run"<< endl;
+    MyFile  << "No more jobs to run"<< endl;
     t6 = clock(); //stop
+    MyFile.close(); */
 
     ss.clear();
     ifs.clear();
-    ifs.close();
+    ifs.close(); 
 
     // the vector implementation
     VecPriorityQueue<CPU_Job> myVHeap1000; //works
@@ -244,8 +330,6 @@ int main()
 
 
     ifs.open(file1000);
-
-
     // 4. 
     t21 = clock(); //start
     while(!ifs.eof()){ // only going into loop 1 time when doing 10
@@ -413,12 +497,7 @@ int main()
     cout << "Timing: " << diff8 << " milisec" << endl; 
 
     double diff9 = (double)(t36 - t35)*1000/CLOCKS_PER_SEC; 
-    cout << "Timing: " << diff9 << " milisec" << endl; */
-
-    // getting output files from SetSeize4.txt and SetSize10.txt
-
-
-
+    cout << "Timing: " << diff9 << " milisec" << endl; 
 
     return 0;
 }

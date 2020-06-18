@@ -25,17 +25,18 @@ struct CPU_Job
     //bool operator<(const CPU_Job& job); // compares jobs priorities and/or IDs
 };
 
+
 struct EmptyTree : public std::runtime_error {
   explicit EmptyTree(char const* msg=nullptr): runtime_error(msg) {}
 };
 
-//binary heap implementation using a vector
 
+//binary heap implementation using a vector
 template<typename T>
 class BinaryHeap
 {
     private:
-        vector<T> heap; //vector can be of type CPU_Job
+        BinaryHeapObj heap; //vector can be of type CPU_Job
     public:
         BinaryHeap(int sz = 0): heap(sz){}
         T remove_min();
