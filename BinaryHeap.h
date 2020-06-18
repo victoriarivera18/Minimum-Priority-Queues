@@ -164,7 +164,7 @@ bool CPU_Job::operator==(const CPU_Job& right) { // O(1)
 }
 
 
-ostream& operator << (ostream& os, const CPU_Job& r1) { // outputs certain records in stated format
+ostream& operator << (ostream& os, const CPU_Job& r1) { // O(1) outputs certain records in stated format
     // O(1)
     os << "Job " << r1.ID << " with length " << r1.length << " and priority " << r1.prior << endl;
     return os;
@@ -172,7 +172,7 @@ ostream& operator << (ostream& os, const CPU_Job& r1) { // outputs certain recor
 
 
 template<typename T>
-void BinaryHeap<T>::printHeap()
+void BinaryHeap<T>::printHeap() //O(n) for testing purposes
 {
     for(size_t i = 0; i < heap.getSize(); i++){
         cout << heap.vect.at(i);

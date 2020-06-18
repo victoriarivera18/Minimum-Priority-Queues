@@ -59,7 +59,6 @@ void VecPriorityQueue<T>::insert(T k) // O(1)
             }
         }
     } */
-
 }
 
 template<typename T>
